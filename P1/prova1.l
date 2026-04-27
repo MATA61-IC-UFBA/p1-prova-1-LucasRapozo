@@ -9,11 +9,22 @@ int yylex();
 
 %option noyywrap
 
+Digito    [0-9]
+Decimal   {Digito}+
+Real      {Digito}+"."{Digito}+
+
 %%
+[ \t]+ ;
 
-/* copiar E2 e fazer as extensões */
-
-
-.            { return ERROR; }
+{Real}    {return NUM;}
+{Decimal} {return NUM;}
+"+"       {return PLUS;}
+"-"       {return MINUS;}
+"*"       {return TIMES;}
+"/"       {return DIV;}
+"("       {return LPAR;}
+")"       {return RPAR;}
+\n        {return EOL;}
+.         {return ERROR;}
 
 %%
