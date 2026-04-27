@@ -12,19 +12,17 @@ int yylex();
 Digito    [0-9]
 Decimal   {Digito}+
 Real      {Digito}+"."{Digito}+
-Char      [A-Za-z]
-String    "{Char}{Char}+"
+String    \"[^\"\n]*\"
 Id        [A-Za-z_][A-Za-z0-9_]*
 
 %%
-[ \t]+ ;
+[ \t\n\r]+ ;
 "//".* ;
 
 "print"   {return PRINT;}
 "concat"  {return CONCAT;}
 "length"  {return LENGTH;}
-"="       {return ASSIGN;}
-{Id}      {return IDENT;}
+
 {String}  {return STRING;}
 {Real}    {return NUM;}
 {Decimal} {return NUM;}
@@ -34,7 +32,10 @@ Id        [A-Za-z_][A-Za-z0-9_]*
 "/"       {return DIV;}
 "("       {return LPAR;}
 ")"       {return RPAR;}
-\n        {return EOL;}
+"="       {return ASSIGN;}
+","       {return VIRGULA;}
+
+{Id}      {return IDENT;}
 .         {return ERROR;}
 
 %%
